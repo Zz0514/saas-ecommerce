@@ -1,3 +1,4 @@
+// 路由配置：把 URL 路径映射到对应的页面组件
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Products from '../views/Products.vue'

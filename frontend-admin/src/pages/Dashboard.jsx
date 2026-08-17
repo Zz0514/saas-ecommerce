@@ -1,3 +1,4 @@
+// 后台首页（仪表盘）：当前为欢迎占位页，后续可放销售/订单数据概览
 import { Layout, Typography } from 'antd'
 
 const { Header, Content } = Layout

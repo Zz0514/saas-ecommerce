@@ -1,3 +1,4 @@
+// 路由表：不同路径渲染对应页面；`*` 兜底把未知路径重定向到首页
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'

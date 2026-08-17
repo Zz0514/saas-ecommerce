@@ -7,6 +7,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * 自定义 UserDetailsService：Spring Security 在登录/鉴权时，
+ * 通过它从数据库按用户名查出用户，并包装成 UserDetails（用户名、密码、角色）。
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

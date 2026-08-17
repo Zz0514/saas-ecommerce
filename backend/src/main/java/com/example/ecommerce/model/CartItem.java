@@ -3,6 +3,9 @@ package com.example.ecommerce.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * 购物车项：购物车中的单个商品及其数量（默认 1 件）。
+ */
 @Entity
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class CartItem {

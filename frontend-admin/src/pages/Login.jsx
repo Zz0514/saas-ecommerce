@@ -1,3 +1,4 @@
+// 管理员登录页：输入账号密码调用后端登录接口，成功后保存 token 并跳回首页
 import { useState } from 'react'
 import { Card, Input, Button, message } from 'antd'
 import request from '../api/request'

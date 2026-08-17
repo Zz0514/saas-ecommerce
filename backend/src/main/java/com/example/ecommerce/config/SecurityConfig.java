@@ -18,6 +18,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+/**
+ * Spring Security 主配置。
+ * - 关闭 CSRF：前后端分离 + JWT 无状态通信，不需要 CSRF 防护
+ * - 关闭 Session：每次请求都带 Token，服务端不保存会话
+ * - 把自定义 JwtAuthenticationFilter 放在用户名密码过滤器之前，先完成 Token 校验
+ * - 通过 URL 规则区分「匿名可访问 / 需登录 / 需管理员角色」
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -33,12 +40,17 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            // 无状态：服务端不创建 HttpSession，登录态完全由前端携带的 Token 决定
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+                // 认证/注册、商品列表与分类对所有人开放（购物无需登录也能浏览）
                 .requestMatchers("/api/auth/**", "/api/products/**", "/api/categories/**").permitAll()
+                // 后台管理类接口仅 ADMIN 角色可访问
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                // 其余接口一律需要携带合法 Token
                 .anyRequest().authenticated()
             )
+            // 在用户名密码认证过滤器之前插入 JWT 校验过滤器
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

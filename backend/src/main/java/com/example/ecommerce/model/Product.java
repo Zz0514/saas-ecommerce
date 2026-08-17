@@ -5,6 +5,10 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
+/**
+ * 商品表：商城里可被购买的商品。
+ * price 用 BigDecimal 避免浮点精度问题；category 关联分类（多对一）。
+ */
 @Entity
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Product {

@@ -1,3 +1,4 @@
+// 登录 / 注册 接口封装
 import request from './request'
 
 export function login(data) {

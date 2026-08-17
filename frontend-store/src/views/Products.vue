@@ -17,8 +17,10 @@
 import { ref, onMounted } from 'vue'
 import { getProducts } from '../api/product'
 
+// 商品列表用 ref 持有，模板里通过 v-for 渲染
 const products = ref([])
 
+// 页面挂载后立刻拉取商品数据
 onMounted(async () => {
   const { data } = await getProducts()
   products.value = data

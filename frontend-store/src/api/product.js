@@ -1,3 +1,4 @@
+// 商品相关接口封装
 import request from './request'
 
 export function getProducts() {

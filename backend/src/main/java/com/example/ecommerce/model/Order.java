@@ -7,6 +7,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * 订单表：一笔订单属于一个用户，包含多个订单项（OrderItem）。
+ * status 记录流转：待支付 → 已支付 → 已发货 → 已完成 / 已取消。
+ */
 @Entity
 @Table(name = "orders")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder

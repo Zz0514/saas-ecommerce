@@ -1,7 +1,9 @@
+# 后端服务端口
 server:
   port: 8080
 
 spring:
+  # 数据库连接信息（docker-compose 里 MySQL 主机名就是 mysql）
   datasource:
     url: jdbc:mysql://mysql:3306/ecommerce?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: ecommerce
@@ -9,14 +11,17 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
+      # update：启动时不删表，自动按实体结构增量建/改表（开发友好）
       ddl-auto: update
     show-sql: false
     properties:
       hibernate:
         format_sql: true
   jackson:
+    # 序列化 JSON 时忽略 null 字段，返回更干净
     default-property-inclusion: non_null
 
+# 自定义 JWT 配置（非 Spring 标准前缀，由 JwtUtil 通过 @Value 读取）
 jwt:
   # 至少 32 个字符（HS256 需要 >=256 bit）。生产环境务必用环境变量覆盖。
   secret: "thisIsASecretKeyForJwtTokenGenerationMustBeLongEnoughAtLeast256Bits!!"

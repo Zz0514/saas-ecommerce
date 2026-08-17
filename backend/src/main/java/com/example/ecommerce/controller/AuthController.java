@@ -6,6 +6,10 @@ import com.example.ecommerce.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 认证接口：/api/auth/register（注册）、/api/auth/login（登录）。
+ * 这两个接口在 SecurityConfig 里被设为匿名可访问。
+ */
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor

@@ -1,6 +1,8 @@
+# 一键编排四个服务：MySQL、后端、顾客端、管理后台
 version: "3.8"
 
 services:
+  # 数据库：首次启动自动建库 ecommerce，数据持久化到命名卷 mysql-data
   mysql:
     image: mysql:8.0
     container_name: ecommerce-mysql
@@ -13,12 +15,14 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
+    # 健康检查：只有当 MySQL 真正就绪后，backend 才会启动（避免连不上库）
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
 
+  # 后端：用环境变量覆盖数据库连接与 JWT 密钥（不写死在代码里）
   backend:
     build: ./backend
     container_name: ecommerce-backend
@@ -33,6 +37,7 @@ services:
     ports:
       - "8080:8080"
 
+  # 顾客端（Vue）：容器内跑 nginx，对外 80，映射到本机 5173
   store:
     build: ./frontend-store
     container_name: ecommerce-store
@@ -41,6 +46,7 @@ services:
     ports:
       - "5173:80"
 
+  # 管理后台（React）：同样 nginx，映射到本机 5174
   admin:
     build: ./frontend-admin
     container_name: ecommerce-admin
@@ -49,5 +55,6 @@ services:
     ports:
       - "5174:80"
 
+# 命名卷：保证 MySQL 数据在容器重建后不丢失
 volumes:
   mysql-data:

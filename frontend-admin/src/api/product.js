@@ -1,3 +1,4 @@
+// 商品管理接口封装（管理后台使用：含新增、删除）
 import request from './request'
 
 export function getProducts() {

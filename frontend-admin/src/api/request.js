@@ -1,3 +1,4 @@
+// 统一的 axios 实例：所有请求走 /api 前缀，自动附带 JWT，并在 401 时清掉本地 token
 import axios from 'axios'
 
 const service = axios.create({

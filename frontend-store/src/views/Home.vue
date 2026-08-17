@@ -7,6 +7,7 @@
 </template>
 
 <script setup>
+// 首页：展示欢迎语，提供「去逛逛」「登录」两个入口（通过 $router 跳转）
 </script>
 
 <style>

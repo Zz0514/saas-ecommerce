@@ -5,6 +5,9 @@ import lombok.*;
 
 import java.util.List;
 
+/**
+ * 购物车：与用户一对一绑定（一个用户一个购物车）。items 为购物车内的商品行。
+ */
 @Entity
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Cart {

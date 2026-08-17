@@ -14,6 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * JWT 工具类：负责 Token 的生成与解析。
+ * - secret / expiration 来自 application.yml 的 jwt.* 配置
+ * - 使用 HS256 对称算法，密钥由 jwt.secret 派生
+ */
 @Component
 public class JwtUtil {
 
@@ -52,11 +57,13 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
+    // 生成 Token：载荷里只放 subject（用户名），签名密钥来自配置
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
     }
 
+    // 真正构造 Token：设置主题、签发时间、过期时间，并用密钥签名
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .claims(claims)
@@ -67,6 +74,7 @@ public class JwtUtil {
                 .compact();
     }
 
+    // 校验：Token 中的用户名要与传入用户一致，且未过期
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));

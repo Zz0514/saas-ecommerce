@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * 商品业务：商品的增删改查。
+ * 入参用 ProductDto（对外传输对象），落库前转换为 Product 实体（toEntity）。
+ */
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -31,6 +35,7 @@ public class ProductService {
     }
 
     public Product update(Long id, ProductDto dto) {
+        // 先查后改：基于数据库已有记录做局部更新，而不是整体替换
         Product existing = getById(id);
         existing.setName(dto.getName());
         existing.setDescription(dto.getDescription());
@@ -38,6 +43,7 @@ public class ProductService {
         existing.setStock(dto.getStock());
         existing.setImageUrl(dto.getImageUrl());
         existing.setActive(dto.getActive() == null ? existing.getActive() : dto.getActive());
+        // 仅当传入了分类 ID 时才更换分类
         if (dto.getCategoryId() != null) {
             Category category = categoryRepository.findById(dto.getCategoryId())
                     .orElseThrow(() -> new RuntimeException("分类不存在"));
@@ -50,6 +56,7 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    // DTO -> 实体 的转换：把前端传来的数据组装成可持久化的 Product
     private Product toEntity(ProductDto dto) {
         Product product = Product.builder()
                 .name(dto.getName())

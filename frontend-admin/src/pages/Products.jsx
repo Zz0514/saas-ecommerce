@@ -1,3 +1,4 @@
+// 商品管理页：表格展示商品列表，支持「新增」（弹窗表单）和「删除」
 import { useEffect, useState } from 'react'
 import { Table, Button, Modal, Form, InputNumber, Input, message } from 'antd'
 import { getProducts, createProduct, deleteProduct } from '../api/product'
@@ -7,11 +8,13 @@ export default function Products() {
   const [open, setOpen] = useState(false)
   const [form] = Form.useForm()
 
+  // 拉取商品列表并写入 state
   const load = async () => {
     const res = await getProducts()
     setData(res.data)
   }
 
+  // 组件首次渲染时加载一次数据
   useEffect(() => { load() }, [])
 
   const handleCreate = async () => {
