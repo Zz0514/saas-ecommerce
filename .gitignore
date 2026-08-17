@@ -1,0 +1,25 @@
+# ===== Java / Maven =====
+backend/target/
+backend/.idea/
+backend/*.iml
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+
+# ===== Node / 前端 =====
+node_modules/
+dist/
+frontend-store/dist/
+frontend-admin/dist/
+
+# ===== 环境变量 / 本地配置 =====
+.env
+.env.local
+*.local
+
+# ===== 系统 / 编辑器 =====
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
