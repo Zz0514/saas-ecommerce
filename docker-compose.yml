@@ -43,6 +43,9 @@ services:
     container_name: ecommerce-store
     depends_on:
       - backend
+    # 把 PORT 传给 nginx 模板（模板里 listen ${PORT}），本地保持 80
+    environment:
+      - PORT=80
     ports:
       - "5173:80"
 
@@ -52,6 +55,8 @@ services:
     container_name: ecommerce-admin
     depends_on:
       - backend
+    environment:
+      - PORT=80
     ports:
       - "5174:80"
 

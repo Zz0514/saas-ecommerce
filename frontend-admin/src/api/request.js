@@ -1,8 +1,11 @@
-// 统一的 axios 实例：所有请求走 /api 前缀，自动附带 JWT，并在 401 时清掉本地 token
+// 统一的 axios 实例：
+// - 本地：baseURL 为 /api，由 vite 代理或 nginx 转发到后端
+// - 部署（如 Railway）：通过环境变量 REACT_APP_API_BASE_URL 指定后端公网地址，例如 https://xxx.railway.app/api
+// 并自动附带 JWT、在收到 401 时清掉本地 token
 import axios from 'axios'
 
 const service = axios.create({
-  baseURL: '/api',
+  baseURL: process.env.REACT_APP_API_BASE_URL || '/api',
   timeout: 10000
 })
 
